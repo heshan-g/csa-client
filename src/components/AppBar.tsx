@@ -13,9 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Dashboard from '../pages/Dashboard';
-import CreateShipment from '../pages/CreateShipment';
-import FindShipment from '../pages/FindShipment';
+import { Dashboard, CreateShipment, FindShipment } from '../pages';
 
 interface Props {
   /**
@@ -41,7 +39,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        CSA
       </Typography>
       <Divider />
       <List>

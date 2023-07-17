@@ -75,7 +75,7 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
-          <Box component="form" sx={{ mt: 1 }}>
+          <Box component="form" sx={{ mt: 1 }} onSubmit={login}>
             <TextField
               margin="normal"
               required
@@ -105,7 +105,6 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
               fullWidth
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
-              onClick={() => login}
             >
               LOG IN
             </Button>
