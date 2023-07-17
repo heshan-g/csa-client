@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FormEvent, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,19 +7,40 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import config from '../config/config';
+
+type LoginProps = {
+  setCurrentPage: (currentPage: string) => void;
+  setIsAuth: (isAuth: boolean) => void;
+}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+    (async () => {
+      try {
+        const response = await axios.post(
+          `${config.api.url}/auth/login`,
+          { email, password }
+        );
+
+        localStorage.setItem('user', JSON.stringify(response.data));
+
+        setCurrentPage('dashboard');
+        setIsAuth(true);
+      } catch (err: any) {
+        console.error(err);
+      }
+    })();
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -41,7 +62,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -51,6 +72,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -61,12 +84,15 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
+              onClick={login}
             >
               LOG IN
             </Button>
@@ -74,8 +100,9 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="outlined"
+              onClick={() => setCurrentPage('register')}
             >
-              Register (sign-up)
+              Create a new account
             </Button>
           </Box>
         </Box>
