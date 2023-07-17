@@ -14,6 +14,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Dashboard, CreateShipment, FindShipment } from '../pages';
+import axios from 'axios';
+import config from '../config/config';
 
 interface Props {
   /**
@@ -23,6 +25,7 @@ interface Props {
   window?: () => Window;
   currentPage: string;
   setCurrentPage: (currentPage: string) => void;
+  setIsAuth: (isAuth: boolean) => void;
 }
 
 const drawerWidth = 240;
@@ -56,6 +59,18 @@ export default function DrawerAppBar(props: Props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  const logout = () => {
+    (async () => {
+      try {
+        axios.post(`${config.api.url}/auth/logout`, {}, { withCredentials: true });
+
+        props.setCurrentPage('login');
+        props.setIsAuth(false);
+        localStorage.removeItem('user');
+      } catch (err) {}
+    })();
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -87,6 +102,13 @@ export default function DrawerAppBar(props: Props) {
                 {item}
               </Button>
             ))}
+
+            <Button
+              sx={{ color: 'white' }}
+              onClick={() => logout()}
+            >
+              Logout
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>

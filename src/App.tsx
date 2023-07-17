@@ -24,7 +24,7 @@ function App() {
     }
 
     return (
-      <AppBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <AppBar currentPage={currentPage} setCurrentPage={setCurrentPage} setIsAuth={setIsAuth} />
     );
   }
 
