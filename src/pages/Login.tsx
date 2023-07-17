@@ -36,7 +36,7 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
 
         localStorage.setItem('user', JSON.stringify(response.data));
 
-        setCurrentPage('dashboard');
+        setCurrentPage('Dashboard');
         setIsAuth(true);
       } catch (err: any) {
         console.log(err?.response?.data);
@@ -105,7 +105,7 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
               fullWidth
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
-              onClick={login}
+              onClick={() => login}
             >
               LOG IN
             </Button>
