@@ -30,7 +30,8 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
       try {
         const response = await axios.post(
           `${config.api.url}/auth/login`,
-          { email, password }
+          { email, password },
+          { withCredentials: true },
         );
 
         localStorage.setItem('user', JSON.stringify(response.data));

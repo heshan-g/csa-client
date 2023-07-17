@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Login, Register, Dashboard } from './pages';
+import { Login, Register } from './pages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AppBar from './components/AppBar';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -11,7 +12,7 @@ function App() {
     const user = localStorage.getItem('user');
 
     setIsAuth(!!user);
-    setCurrentPage(user ? 'dashboard' : 'login');
+    setCurrentPage(user ? 'Dashboard' : 'login');
   }, []);
 
   const displayPage = (page: string) => {
@@ -23,10 +24,7 @@ function App() {
     }
 
     return (
-      <>
-        <div>Header</div>
-        {page === 'dashboard' && <Dashboard />}
-      </>
+      <AppBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
     );
   }
 
