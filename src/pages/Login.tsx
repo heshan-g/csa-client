@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import config from '../config/config';
+import { toast } from 'react-toastify';
 
 type LoginProps = {
   setCurrentPage: (currentPage: string) => void;
@@ -37,7 +38,18 @@ export default function Login({ setCurrentPage, setIsAuth }: LoginProps) {
         setCurrentPage('dashboard');
         setIsAuth(true);
       } catch (err: any) {
-        console.error(err);
+        console.log(err?.response?.data);
+
+        const errorData = err?.response?.data?.data;
+
+        if (errorData) {
+          for (const dataPoint of errorData) {
+            toast.error(dataPoint.message);
+          }
+        } else {
+          const message = err?.response?.data?.message || 'An unknown error occurred';
+          toast.error(message);
+        }
       }
     })();
   }

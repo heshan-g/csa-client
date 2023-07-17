@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Login, Register, Dashboard } from './pages';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -31,8 +33,10 @@ function App() {
   return (
     <>
       {displayPage(currentPage)}
+      <ToastContainer />
     </>
   )
 }
 
-export default App
+export default App;
+
