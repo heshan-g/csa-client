@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -24,9 +24,7 @@ export default function Register({ setCurrentPage }: RegisterProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const register = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const register = () => {
     (async () => {
       try {
         await axios.post(
@@ -75,7 +73,7 @@ export default function Register({ setCurrentPage }: RegisterProps) {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box component="div" sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -120,7 +118,7 @@ export default function Register({ setCurrentPage }: RegisterProps) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => register}
+              onClick={register}
             >
               Create account
             </Button>
